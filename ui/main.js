@@ -7,7 +7,8 @@ const ws = new WebSocket(url)
 const freqKnob = {
     active: false,
     mouseOrigin: null,
-    origin: null
+    origin: null,
+    offsetAngle: 0
 }
 fetchText("./img/communicator_plain.svg").then(data => {
     $("#svgContainer").html(data)
@@ -50,10 +51,12 @@ function handleFreqKnob(e) {
             const centerX = x + width / 2;
             const centerY = y + height / 2;
 
+            const transform = $("#frequency_knob").attr("transform")
+
             freqKnob.active = true
             freqKnob.mouseOrigin = { x: e.clientX, y: e.clientY }
             freqKnob.origin = { x: centerX, y: centerY }
-
+            freqKnob.offsetAngle = transform ? Number(transform.match(/rotate\((.*)\)/)[1]) : 0
             break;
         case "mouseup":
             freqKnob.active = false
@@ -65,9 +68,13 @@ function handleFreqKnob(e) {
 
             const endAngle = angle(freqKnob.origin, { x: e.clientX, y: e.clientY })
 
-            console.log((endAngle - startAngle) * 180 / Math.PI)
+            const calculatedAngle = ((endAngle - startAngle) * 180 / Math.PI + freqKnob.offsetAngle +360) % 360
 
-            $("#frequency_knob").attr("transform", `rotate(${(endAngle - startAngle) * 180 / Math.PI})`)
+            const limitedAngle = Math.min()
+
+            console.log(calculatedAngle)
+
+            $("#frequency_knob").attr("transform", `rotate(${calculatedAngle})`)
             $("#frequency_knob").attr("transform-origin", "center")
 
             break;
