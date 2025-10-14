@@ -2,5 +2,9 @@
   "type": "module",
   "dependencies": {
     "ws": "^8.18.3"
+  },
+  "scripts": {
+    "dev": "node --env-file=.env.dev index",
+    "start": "node --env-file=.env.prod index"
   }
 }

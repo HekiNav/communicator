@@ -1,4 +1,30 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #aaf;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.center {
+    width: 60vw;
+    margin: 0 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+svg {
+    flex-shrink: 1;
+    display: block;
+}
+
+#frequency_knob {
+    cursor: grab;
+}
+#frequency_knob:active {
+    cursor: grabbing;
+}
+.fill-box {
+  transform-box: fill-box;
 }

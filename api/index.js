@@ -1,10 +1,12 @@
 import { WebSocketServer } from "ws"
 
-const wss = new WebSocketServer({ port: 8080 })
+const wss = new WebSocketServer({ port: process.env.PORT })
 
+wss.on("listening", () => {
+    console.log(`Listening on port ${process.env.PORT}`)
+})
 
 const frequencies = new Map()
-
 
 wss.on("connection", (socket) => {
     let currentFreq = null
