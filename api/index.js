@@ -23,7 +23,7 @@ wss.on("connection", (socket) => {
             case "freq":
                 if (!checkParams(socket, data, "freq")) return
 
-                if (!(Number(data.freq) && Number(data.freq) > 199 && Number(data.freq) < 1000 && Number(data.freq))) {
+                if (!(Number(data.freq) && Number(data.freq) >= 200 && Number(data.freq) <= 1000 && Number(data.freq))) {
                     return error(socket, "Invalid frequency ID. Valid: int between 200 and 999")
                 }
 
@@ -61,6 +61,8 @@ function checkParams(socket, object, ...keys) {
     if (missing.length) error(socket, `Following keys from the message.data object are missing: ${missing}`)
     return !missing.length
 }
+
+
 
 function error(socket, msg) {
     socket.send(JSON.stringify({ type: "error", data: { msg: msg } }))

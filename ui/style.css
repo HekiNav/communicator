@@ -3,15 +3,15 @@ body {
     padding: 0;
     background-color: #aaf;
     height: 100vh;
-    overflow: hidden;
 }
 
 .center {
-    width: 60vw;
-    margin: 0 20vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    padding: 5vh;
+    height: 90vh;
 }
 
 svg {
