@@ -4,6 +4,13 @@ const url = "ws://127.0.0.1:8080"
 
 const ws = new WebSocket(url)
 
+let lcdUpdating
+
+let currentChannel = 0
+
+let receivedMessages = 0
+let sentMessages = 0
+
 const freqKnob = {
     active: false,
     mouseOrigin: null,
@@ -15,18 +22,22 @@ fetchText("./img/communicator_plain.svg").then(data => {
     $("#frequency_knob").on("mousedown", handleFreqKnob)
     $("body").on("mousemove", handleFreqKnob)
         .on("mouseup", handleFreqKnob)
+    if (ws.readyState == ws.OPEN) wsReady()
+    else ws.addEventListener("open", wsReady)
 })
 
 
-ws.addEventListener("open", (e) => {
-    switchChannel(600)
-})
+
 
 ws.addEventListener("message", (e) => {
+    receivedMessages++
+    reloadLcdStats()
     console.log("msg: ", JSON.parse(e.data))
 })
 
 function broadcast(msg) {
+    sentMessages++
+    reloadLcdStats()
     ws.send(JSON.stringify({ type: "broadcast", data: { msg: msg } }))
 }
 
@@ -59,8 +70,6 @@ function handleFreqKnob(e) {
 
             const channel = Math.round(range(35, 325, 20, 100, (current + 180) % 360)) * 10
 
-            console.log(channel)
-
             switchChannel(channel)
 
             break;
@@ -82,7 +91,7 @@ function handleFreqKnob(e) {
             const hopLimitedAngle = (currentAngle == limits[0] && limitedAngle <= limits[1]) || (currentAngle == limits[1] && limitedAngle >= limits[0]) ? currentAngle : limitedAngle
 
 
-            const wavescale = range(35, 325, 5, 1, (hopLimitedAngle + 180) % 360)
+            const wavescale = range(35, 325, 10, 1, (hopLimitedAngle + 180) % 360)
 
             const snappedAngle = (range(20, 100, 35, 325, Math.floor(range(35, 325, 20, 100, (hopLimitedAngle + 180) % 360))) + 180) % 360
 
@@ -99,24 +108,72 @@ function handleFreqKnob(e) {
     }
 }
 function switchChannel(channel) {
+    if (currentChannel == channel) return
+    currentChannel = channel
+
+    receivedMessages = 0
+    sentMessages = 0
+
     ws.send(
         JSON.stringify(
             { type: "freq", data: { freq: channel } }
         )
     )
-    broadcast("hello fooba")
+
     updateLcd([
-        `CH ${channel}`,
-        "RECEIVE"
+        `CH ${channel}`
+    ])
+
+    broadcast("hello fooba")
+}
+
+function wsReady() {
+    switchChannel(600)
+}
+function reloadLcdStats() {
+    updateLcd([
+        "",
+        "",
+        `RECEIVED ${receivedMessages}`,
+        `SENT ${sentMessages}`,
+        "",
+        "",
     ])
 }
 
-function updateLcd(rows) {
-    const lcdRows = [1,2,3,4,5,6].map(n => $(`#lcd_line_${n}`))
-    
-    for (let i = 0; i < lcdRows.length; i++) {
-        const tspan = lcdRows[i]
-        tspan.html(rows.length > i ? rows[i] : "")
+function updateLcd(rows = [" ", " ", " ", " ", " ", " "]) {
+    if (lcdUpdating) {
+        console.warn("LCD updater busy")
+        lcdUpdating.then(() => {
+            updateLcd(rows)
+        })
+    } else {
+
+        lcdUpdating = new Promise((resolve, reject) => {
+            const lcdRows = [1, 2, 3, 4, 5, 6].map(n => $(`#lcd_line_${n}`))
+            let i = -1
+            const interval = setInterval(() => {
+                if (i >= lcdRows.length) {
+                    clearInterval(interval)
+                    lcdUpdating = null
+                    resolve()
+                    return
+                }
+                const tspan = lcdRows[i]
+                if (tspan && rows.length > i && rows[i]) {
+                    tspan.html(rows[i])
+                } else if (tspan) {
+                    tspan.html(tspan.attr("data-prev"))
+                }
+                const nextTspan = lcdRows[i + 1]
+
+                if (nextTspan) {
+                    nextTspan.attr("data-prev", nextTspan.html())
+                    nextTspan.html("")
+                }
+                i++
+            }, 100)
+        })
     }
 }
 function roundStep(number, increment, offset = 0) {

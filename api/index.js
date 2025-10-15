@@ -24,7 +24,7 @@ wss.on("connection", (socket) => {
                 if (!checkParams(socket, data, "freq")) return
 
                 if (!(Number(data.freq) && Number(data.freq) >= 200 && Number(data.freq) <= 1000 && Number(data.freq))) {
-                    return error(socket, "Invalid frequency ID. Valid: int between 200 and 999")
+                    return error(socket, "Invalid frequency ID. Valid: int between (including) 200 and 1000")
                 }
 
                 // if already connected remove from previous connection

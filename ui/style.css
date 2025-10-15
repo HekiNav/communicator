@@ -1,3 +1,20 @@
+@font-face {
+    font-family: "Tiny5-LCD";
+    src: url("./fonts/Tiny5-LCDRegular.woff2");
+}
+@font-face {
+    font-family: "Tiny5-LCD-bold";
+    src: url("./fonts/Tiny5-LCDBold.woff2");
+}
+@font-face {
+    font-family: "Freestyle Script";
+    src: url("./fonts/Freestyle\ Script.woff2");
+}
+@font-face {
+    font-family: "Tw Cen MT Condensed";
+    src: url("./fonts/Tw\ Cen\ MT\ Condensed\ Regular.woff2");
+}
+
 body {
     margin: 0;
     padding: 0;
