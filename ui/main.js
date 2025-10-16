@@ -34,10 +34,10 @@ fetchText("./img/communicator.svg").then(data => {
     $("#keyboard").children().children().each((index, child) => {
         child.classList.add("key")
         child.addEventListener("mousedown", e => {
-            write(child.getAttribute("inkscape:label") || child.innerHTML, true)
+            write(child.hasAttribute("inkscape:label") ? child.getAttribute("inkscape:label") : child.children.length ? child.children[0].innerHTML : child.innerHTML, true)
         })
         child.addEventListener("mouseup", e => {
-            write(child.getAttribute("inkscape:label") || child.innerHTML, false)
+            write(child.hasAttribute("inkscape:label") ? child.getAttribute("inkscape:label") : child.children.length ? child.children[0].innerHTML : child.innerHTML, false)
         })
     })
     write("", false, true)
@@ -140,8 +140,6 @@ function switchChannel(channel) {
     updateLcd([
         `CH ${channel}`
     ])
-
-    broadcast("hello fooba")
 }
 function write(p1, p2, p3 = false) {
 
@@ -171,7 +169,6 @@ function write(p1, p2, p3 = false) {
         $("#keyboard").children("#keys").children().each((index, child) => {
             if (child.getAttribute("inkscape:label").toLowerCase() == key) child.setAttribute("fill", "#b57b30")
         })
-
 
         const maxWidth = $("#lcdText").parent().get(0).getBBox().width * 0.85
 

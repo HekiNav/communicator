@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,21 +37,27 @@
      inkscape:window-width="1920"
      inkscape:window-height="1046"
      id="namedview1418"
-     showgrid="false"
+     showgrid="true"
      inkscape:snap-bbox="true"
      inkscape:snap-page="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
-     inkscape:zoom="32"
-     inkscape:cx="186.74216"
-     inkscape:cy="168.84934"
+     inkscape:zoom="4"
+     inkscape:cx="108.91291"
+     inkscape:cy="108.49208"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="lcd"
      inkscape:snap-bbox-midpoints="true"
      inkscape:document-rotation="0"
-     inkscape:lockguides="true" />
+     inkscape:lockguides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid196"
+       spacingx="9.9999998"
+       spacingy="9.9999998" />
+  </sodipodi:namedview>
   <defs
      id="defs1">
     <linearGradient
@@ -95,23 +101,24 @@
        x2="106.33333"
        y2="141.375"
        gradientUnits="userSpaceOnUse"
-       spreadMethod="pad" />
+       spreadMethod="pad"
+       gradientTransform="translate(10.000001)" />
     <linearGradient
        xlink:href="#linearGradient34"
        id="linearGradient35"
        gradientUnits="userSpaceOnUse"
-       x1="218.36252"
-       y1="38.364582"
+       x1="220.51877"
+       y1="39.00021"
        x2="305.59375"
        y2="67.46875"
        spreadMethod="pad" />
     <linearGradient
        xlink:href="#linearGradient42"
        id="linearGradient43"
-       x1="10.583331"
-       y1="49.609375"
-       x2="187.85417"
-       y2="49.609375"
+       x1="13.229166"
+       y1="39.6875"
+       x2="103.22916"
+       y2="79.6875"
        gradientUnits="userSpaceOnUse" />
     <radialGradient
        xlink:href="#linearGradient44"
@@ -169,14 +176,14 @@
     </g>
     <g
        id="waveform_view"
-       transform="matrix(0.92565409,0,0,1.0033004,-95.852597,44.624081)">
+       transform="matrix(0.92565409,0,0,1.0033004,25.875889,2.8360798)">
       <rect
          style="font-variation-settings:normal;display:inline;opacity:1;fill:#430400;fill-opacity:1;stroke:none;stroke-width:2.12731;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
          id="rect37"
-         width="87.231232"
-         height="29.104168"
-         x="218.36252"
-         y="38.364582"
+         width="85.074974"
+         height="28.468542"
+         x="220.51877"
+         y="39.00021"
          ry="0" />
       <g
          id="g37"
@@ -193,9 +200,9 @@
       <rect
          style="font-variation-settings:normal;display:inline;opacity:1;fill:none;fill-opacity:1;stroke:url(#linearGradient35);stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000;stop-opacity:1"
          id="rect2-7"
-         width="87.231232"
+         width="85.074974"
          height="29.104168"
-         x="218.36252"
+         x="220.51877"
          y="38.364582"
          ry="2.6458321" />
       <g
@@ -204,64 +211,66 @@
     <path
        id="background"
        style="display:inline;fill:url(#radialGradient45);fill-opacity:1;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
-       d="m 13.671108,26.281556 c -7.3289435,0 -13.22916626,5.900223 -13.22916626,13.229166 V 224.71905 c 0,7.32894 5.90022276,13.22917 13.22916626,13.22917 H 304.71277 c 7.32894,0 13.22916,-5.90023 13.22916,-13.22917 V 39.510722 c 0,-7.328943 -5.90022,-13.229166 -13.22916,-13.229166 z M 108.7237,81.790828 h 75.84757 c 2.01403,0 3.67367,1.799208 3.67367,3.982186 v 23.891046 c 0,2.18298 -1.65964,3.98167 -3.67367,3.98167 H 108.7237 c -2.01403,0 -3.67368,-1.79869 -3.67368,-3.98167 V 85.773014 c 0,-2.182978 1.65965,-3.982186 3.67368,-3.982186 z" />
+       d="m 13.671108,26.281556 c -7.3289435,0 -13.22916626,5.900223 -13.22916626,13.229166 V 224.71905 c 0,7.32894 5.90022276,13.22917 13.22916626,13.22917 H 304.71277 c 7.32894,0 13.22916,-5.90023 13.22916,-13.22917 V 39.510722 c 0,-7.328943 -5.90022,-13.229166 -13.22916,-13.229166 z M 232.48712,40.003287 h 73.72625 c 2.01403,0 3.67367,1.799208 3.67367,3.982186 v 23.891046 c 0,2.182981 -1.65964,3.981672 -3.67367,3.981672 h -73.72625 c -2.01403,0 -3.67368,-1.79869 -3.67368,-3.981672 V 43.985473 c 0,-2.182978 1.65965,-3.982186 3.67368,-3.982186 z"
+       sodipodi:nodetypes="ssssssssssssssssss" />
     <g
        id="lcd"
-       transform="translate(198.43751)">
+       transform="translate(101.02083,2.9583341)"
+       style="display:inline">
       <rect
          style="display:inline;fill:#95cf1a;fill-opacity:1;stroke:url(#linearGradient32);stroke-width:5.29167;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
          id="rect2"
          width="93.104164"
-         height="101.6875"
-         x="13.229166"
+         height="117.35416"
+         x="23.229166"
          y="39.6875"
          ry="2.6458321" />
       <text
          xl:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.9361px;line-height:10.5833px;font-family:Tiny5-LCD-bold;-inkscape-font-specification:Tiny5-LCD-bold;text-decoration-color:#000000;letter-spacing:0px;display:inline;fill:#003524;stroke-width:2.23804;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
-         x="17.757343"
+         x="28"
          y="51.489235"
          id="lcdText"><tspan
-           sodipodi:role="line"
            id="tspan141"
-           x="17.757343"
-           y="51.489235" /><tspan
-           sodipodi:role="line"
+           x="28"
+           y="51.489235"
+           sodipodi:role="line" /><tspan
            id="tspan143"
-           x="17.757343"
-           y="62.072536" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           x="28"
+           y="62.072536"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="72.655838"
-           id="tspan145" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           id="tspan145"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="83.239136"
-           id="tspan147" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           id="tspan147"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="93.822433"
-           id="tspan149" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           id="tspan149"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="104.40573"
-           id="tspan151" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           id="tspan151"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="114.98904"
-           id="tspan153" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           id="tspan153"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="125.57233"
-           id="tspan155" /><tspan
-           sodipodi:role="line"
-           x="17.757343"
+           id="tspan155"
+           sodipodi:role="line" /><tspan
+           x="28"
            y="136.15564"
-           id="tspan157" /></text>
+           id="tspan157"
+           sodipodi:role="line" /></text>
     </g>
     <g
        id="frequency_adjust"
-       transform="matrix(1.9735671,0,0,1.9735671,1.0490583,-77.188047)">
+       transform="matrix(1.9735671,0,0,1.9735671,218.35725,-72.726166)">
       <g
          id="frequency_scale"
          inkscape:label="frequency_scale">
@@ -281,16 +290,16 @@
         <text
            xml:space="preserve"
            style="font-size:5.29167px;line-height:26.4582px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed';text-align:center;text-decoration-color:#000000;letter-spacing:0px;text-anchor:middle;fill:#e2c196;fill-opacity:1;stroke:none;stroke-width:2.59292;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:0.340897, 10.5678;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-           x="39"
+           x="40.209225"
            y="117"
            id="text4"
-           inkscape:label="text4">                200            </text>
+           inkscape:label="text4">200 </text>
         <text
            xml:space="preserve"
            style="font-size:5.29167px;line-height:26.4582px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed';text-align:center;text-decoration-color:#000000;letter-spacing:0px;text-anchor:middle;fill:#e2c196;fill-opacity:1;stroke:none;stroke-width:2.59292;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:0.340897, 10.5678;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-           x="9.3999996"
+           x="10.539845"
            y="117"
-           id="text4-4">                1000            </text>
+           id="text4-4">1000 </text>
       </g>
       <g
          id="frequency_knob"
@@ -310,38 +319,43 @@
     </g>
     <g
        id="logo"
-       inkscape:label="logo">
+       inkscape:label="logo"
+       transform="translate(-3.2291662,0.3124992)">
       <rect
          style="font-variation-settings:normal;opacity:1;fill:url(#linearGradient43);fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000;stop-opacity:1"
          id="rect42"
-         width="171.97917"
-         height="19.843748"
+         width="90"
+         height="40"
          x="13.229166"
          y="39.6875"
          ry="2.6458321" />
       <text
          x="16.425068"
          y="53.267845"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;font-family:'Freestyle Script';-inkscape-font-specification:'Freestyle Script'"
-         id="text58">Doohickey</text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;font-family:'Freestyle Script';-inkscape-font-specification:'Freestyle Script';word-spacing:2px;white-space:pre;inline-size:84.2188"
+         id="text58"
+         xml:space="preserve"><tspan
+           x="16.425068"
+           y="53.267845"><tspan
+             dx="0 0 0 0 0 0 0 0 0 -2 2 0 0 0 0 0 -2 2">Doohickey series 300</tspan></tspan></text>
       <text
          xl:space="preserve"
          stye="font-style:.normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.875px;line-height:79.3747px;font-family:'Freestyle Script';-inkscape-font-specification:'Freestyle Script';text-decoration-color:#000000;letter-spacing:0px;opacity:1;fill:#0c0c0c;fill-opacity:1;stroke:none;stroke-width:2.59292;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.259292, 3.88937;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-         x="132.41183"
-         y="54.585815"
+         x="16.155739"
+         y="74.66394"
          id="text41"
-         style="word-spacing:5px"><tspan
+         style="text-align:start;word-spacing:5px;text-anchor:start"><tspan
            id="tspan41"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.875px;line-height:79.3747px;font-family:'Freestyle Script';-inkscape-font-specification:'Freestyle Script';text-align:center;text-anchor:middle;fill:#0c0c0c;fill-opacity:1;stroke:none;stroke-width:2.59292"
-           x="132.41183"
-           y="54.585815"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, '"
-             id="tspan43">Communicator 3000</tspan></tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.875px;line-height:79.3747px;font-family:'Freestyle Script';-inkscape-font-specification:'Freestyle Script';text-align:start;text-anchor:start;fill:#0c0c0c;fill-opacity:1;stroke:none;stroke-width:2.59292"
+           x="16.155739"
+           y="74.66394"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:start;text-anchor:start"
+             id="tspan43">Communicator</tspan></tspan></text>
     </g>
     <g
        id="keyboard"
        inkscape:label="keyboard"
-       transform="translate(0,-0.08838835)">
+       transform="translate(12.499994,11.874995)">
       <g
          id="keys">
         <ellipse
