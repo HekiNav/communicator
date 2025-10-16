@@ -1,6 +1,6 @@
 // TESTING CODE
 
-const url = "ws://127.0.0.1:8080"
+const url = "ws://192.168.1.114:8080"
 
 const ws = new WebSocket(url)
 
@@ -11,6 +11,8 @@ let currentChannel = 0
 
 let receivedMessages = 0
 let sentMessages = 0
+
+let shiftKey = false
 
 const freqKnob = {
     active: false,
@@ -26,8 +28,9 @@ fetchText("./img/communicator.svg").then(data => {
     if (ws.readyState == ws.OPEN) wsReady()
     else ws.addEventListener("open", wsReady)
 
-    window.addEventListener("keydown", write)
-    window.addEventListener("keyup", write)
+    window.addEventListener("keydown", e => write(e) && e.preventDefault())
+    window.addEventListener("keyup", e => write(e) && e.preventDefault())
+
     $("#keyboard").children().children().each((index, child) => {
         child.classList.add("key")
         child.addEventListener("mousedown", e => {
@@ -141,22 +144,28 @@ function switchChannel(channel) {
     broadcast("hello fooba")
 }
 function write(p1, p2, p3 = false) {
+
     let key = p2 == undefined ? p1.key.toLowerCase() : p1.toLowerCase()
     const pressed = p2 == undefined ? p1.type == "keydown" : p2
     const clear = p3
+    const keyboard = !p2
 
+    if (keyboard && key == "shift") {
+        shiftKey = pressed
+    } else if (key == "shift") {
+        shiftKey = pressed
+    }
     if (pressed) {
         if (key.length > 1) {
             switch (key) {
                 case "backspace":
                     msg = msg.substring(0, msg.length - 1)
-                    break;
+                    break
                 default:
-                    key = upperCase(key)
-                    break;
+                    break
             }
         } else {
-            msg += key
+            msg += shiftKey ? upperCase(key) : key
         }
 
         $("#keyboard").children("#keys").children().each((index, child) => {
@@ -183,26 +192,22 @@ function write(p1, p2, p3 = false) {
             return prev
         }, 6)
 
-        updateLcd(["", "", "", "", "", `Message: ${page}/${page}`], false)
+        if (page) updateLcd(["", "", "", "", "", `Message: ${page + 1}/${page + 1}`], false)
 
         for (let i = last; i < $("#lcdText").children().length; i++) {
             const el = $("#lcdText").children().get(i)
             if (i != last) {
                 el.innerHTML = ""
                 break
-            } else {
-                console.log(i)
-                el.innerHTML += "<tspan class='blinky'></tspan>"
-                const blinky = document.querySelector(".blinky")
-                const interval = setInterval(() => {
-                    const prev = blinky.innerHTML
-                    console.log("BLINK", blinky)
-                    if (!prev && prev != "") clearInterval(interval)
-                    else if (prev == "a") blinky.innerHTML = "b"
-                    else blinky.innerHTML = "a"
-                }, 1000)
             }
-
+            el.innerHTML += "<tspan class='blinky'>|</tspan>"
+            const blinky = $(".blinky")
+            const interval = setInterval(() => {
+                const prev = blinky.html()
+                if (!prev && prev != "") clearInterval(interval)
+                else if (prev == "|") blinky.html("")
+                else blinky.html("|")
+            }, 500)
         }
 
     } else {
@@ -240,12 +245,11 @@ function reloadLcdStats() {
     ])
     if (lcdUpdating) {
         lcdUpdating.then(() => {
+            write("test", true)
             if (lcdUpdating) {
                 lcdUpdating.then(() => {
                     write("test", true)
                 })
-            } else {
-                write("test",true)
             }
         })
     }
@@ -267,14 +271,14 @@ function updateLcd(rows = [" ", " ", " ", " ", " ", " "], animate = true) {
                 const tspan = lcdRows[i]
                 if (tspan && rows.length > i && rows[i]) {
                     tspan.innerHTML = rows[i]
-                } else if (tspan) {
+                } else if (tspan && animate) {
                     tspan.innerHTML = tspan.getAttribute("data-prev")
                 }
                 const nextTspan = lcdRows[i + 1]
 
-                if (nextTspan) {
+                if (nextTspan && animate) {
                     nextTspan.setAttribute("data-prev", nextTspan.innerHTML)
-                    if (animate) nextTspan.innerHTML = ""
+                    nextTspan.innerHTML = ""
                 }
             }
             if (animate) {

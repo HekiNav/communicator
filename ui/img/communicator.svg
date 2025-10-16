@@ -42,9 +42,9 @@
      inkscape:snap-page="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
-     inkscape:zoom="256"
-     inkscape:cx="105.59939"
-     inkscape:cy="86.653274"
+     inkscape:zoom="32"
+     inkscape:cx="186.74216"
+     inkscape:cy="168.84934"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
@@ -692,7 +692,8 @@
              sodipodi:role="line"
              id="tspan162"
              x="172.44263"
-             y="171.17725">@</tspan></text>
+             y="171.17725"
+             style="font-size:4px">@</tspan></text>
         <text
            y="167.65454"
            x="187.5"
