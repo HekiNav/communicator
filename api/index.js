@@ -39,7 +39,7 @@ wss.on("connection", (socket) => {
                 if (!checkParams(socket, data, "msg")) return error(socket, "aa")
                 if (!currentFreq) return error("You are not currently on any frequency")
                 for (const client of frequencies.get(currentFreq)) {
-                    if (client.readyState == 1) {
+                    if (client.readyState == 1 && client != socket) {
                         client.send(JSON.stringify({ type: "message", data: { freq: currentFreq, msg: data.msg } }))
                     }
                 }

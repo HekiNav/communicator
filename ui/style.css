@@ -45,3 +45,7 @@ svg {
 .fill-box {
   transform-box: fill-box;
 }
+.key {
+    user-select: none;
+    cursor: pointer;
+}

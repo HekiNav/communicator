@@ -5,6 +5,7 @@ const url = "ws://127.0.0.1:8080"
 const ws = new WebSocket(url)
 
 let lcdUpdating
+let msg = ""
 
 let currentChannel = 0
 
@@ -17,13 +18,26 @@ const freqKnob = {
     origin: null,
     offsetAngle: 0
 }
-fetchText("./img/communicator_plain.svg").then(data => {
+fetchText("./img/communicator.svg").then(data => {
     $("#svgContainer").html(data)
     $("#frequency_knob").on("mousedown", handleFreqKnob)
     $("body").on("mousemove", handleFreqKnob)
         .on("mouseup", handleFreqKnob)
     if (ws.readyState == ws.OPEN) wsReady()
     else ws.addEventListener("open", wsReady)
+
+    window.addEventListener("keydown", write)
+    window.addEventListener("keyup", write)
+    $("#keyboard").children().children().each((index, child) => {
+        child.classList.add("key")
+        child.addEventListener("mousedown", e => {
+            write(child.getAttribute("inkscape:label") || child.innerHTML, true)
+        })
+        child.addEventListener("mouseup", e => {
+            write(child.getAttribute("inkscape:label") || child.innerHTML, false)
+        })
+    })
+    write("", false, true)
 })
 
 
@@ -126,7 +140,75 @@ function switchChannel(channel) {
 
     broadcast("hello fooba")
 }
+function write(p1, p2, p3 = false) {
+    let key = p2 == undefined ? p1.key.toLowerCase() : p1.toLowerCase()
+    const pressed = p2 == undefined ? p1.type == "keydown" : p2
+    const clear = p3
 
+    if (pressed) {
+        if (key.length > 1) {
+            switch (key) {
+                case "backspace":
+                    msg = msg.substring(0, msg.length - 1)
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            msg += key
+        }
+
+        $("#keyboard").children("#keys").children().each((index, child) => {
+            if (child.getAttribute("inkscape:label").toLowerCase() == key) child.setAttribute("fill", "#b57b30")
+        })
+
+        console.log(msg)
+
+        const maxWidth = $("#lcdText").parent().get(0).getBBox().width * 0.85
+
+        let page = 0
+
+        const first = 6
+
+        $("#lcdText").children().get(first).innerHTML = ""
+        const last = msg.split("").reduce((prev, curr) => {
+            const tspan = $("#lcdText").children().get(prev)
+            tspan.innerHTML += curr
+            if (tspan.getBBox().width > maxWidth) {
+                const next = prev + 1 < $("#lcdText").children().length ? prev + 1 : first
+                if (next == first) page++
+                $("#lcdText").children().get(next).innerHTML = ""
+                return next
+            }
+            return prev
+        }, 6)
+
+        console.log(page)
+
+        updateLcd(["", "", "", "", "", `Message: ${page}/${page}`], false)
+
+        for (let i = last; i < $("#lcdText").children().length; i++) {
+            const el = $("#lcdText").children().get(i)
+            if (i != last) {
+                el.innerHTML = ""
+                break
+            }
+            el.innerHTML += "<tspan class='blinky'>|</tspan>"
+            const blinky = $(".blinky")
+            const interval = setInterval(() => {
+                const prev = blinky.html()
+                if (!prev && prev != "") clearInterval(interval)
+                else if (prev == "|") blinky.html("")
+                else blinky.html("|")
+            }, 500)
+        }
+
+    } else {
+        $("#keyboard").children("#keys").children().each((index, child) => {
+            if (child.getAttribute("inkscape:label").toLowerCase() == key || clear) child.setAttribute("fill", "#e2c196")
+        })
+    }
+}
 function wsReady() {
     switchChannel(600)
 }
@@ -137,42 +219,58 @@ function reloadLcdStats() {
         `RECEIVED ${receivedMessages}`,
         `SENT ${sentMessages}`,
         "",
-        "",
+        "Message:"
     ])
+    if (lcdUpdating) {
+        lcdUpdating.then(() => {
+            write("test", true)
+            if (lcdUpdating) {
+                lcdUpdating.then(() => {
+                    write("test", true)
+                })
+            }
+        })
+    }
 }
 
-function updateLcd(rows = [" ", " ", " ", " ", " ", " "]) {
+function updateLcd(rows = [" ", " ", " ", " ", " ", " "], animate = true) {
     if (lcdUpdating) {
         console.warn("LCD updater busy")
         lcdUpdating.then(() => {
-            updateLcd(rows)
+            updateLcd(rows, animate)
         })
     } else {
-
         lcdUpdating = new Promise((resolve, reject) => {
-            const lcdRows = [1, 2, 3, 4, 5, 6].map(n => $(`#lcd_line_${n}`))
+            const lcdRows = $("#lcdText").children().toArray()
             let i = -1
-            const interval = setInterval(() => {
-                if (i >= lcdRows.length) {
-                    clearInterval(interval)
-                    lcdUpdating = null
-                    resolve()
-                    return
-                }
+
+            function updateLine() {
                 const tspan = lcdRows[i]
                 if (tspan && rows.length > i && rows[i]) {
-                    tspan.html(rows[i])
+                    tspan.innerHTML = rows[i]
                 } else if (tspan) {
-                    tspan.html(tspan.attr("data-prev"))
+                    tspan.innerHTML = tspan.getAttribute("data-prev")
                 }
                 const nextTspan = lcdRows[i + 1]
 
                 if (nextTspan) {
-                    nextTspan.attr("data-prev", nextTspan.html())
-                    nextTspan.html("")
+                    nextTspan.setAttribute("data-prev", nextTspan.innerHTML)
+                    if (animate) nextTspan.innerHTML = ""
                 }
                 i++
-            }, 100)
+            }
+            if (animate) {
+                const interval = setInterval(() => {
+                    if (i >= lcdRows.length) {
+                        if (interval) clearInterval(interval)
+                        lcdUpdating = null
+                        resolve()
+                        console.log(i)
+                    }
+                    updateLine()
+                    i++
+                }, 100)
+            }
         })
     }
 }
