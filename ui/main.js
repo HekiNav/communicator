@@ -4,7 +4,7 @@ const url = "ws://127.0.0.1:8080"
 
 const ws = new WebSocket(url)
 
-let lcdUpdating
+let lcdUpdating = null
 let msg = ""
 
 let currentChannel = 0
@@ -152,6 +152,7 @@ function write(p1, p2, p3 = false) {
                     msg = msg.substring(0, msg.length - 1)
                     break;
                 default:
+                    key = upperCase(key)
                     break;
             }
         } else {
@@ -162,7 +163,6 @@ function write(p1, p2, p3 = false) {
             if (child.getAttribute("inkscape:label").toLowerCase() == key) child.setAttribute("fill", "#b57b30")
         })
 
-        console.log(msg)
 
         const maxWidth = $("#lcdText").parent().get(0).getBBox().width * 0.85
 
@@ -183,8 +183,6 @@ function write(p1, p2, p3 = false) {
             return prev
         }, 6)
 
-        console.log(page)
-
         updateLcd(["", "", "", "", "", `Message: ${page}/${page}`], false)
 
         for (let i = last; i < $("#lcdText").children().length; i++) {
@@ -192,21 +190,40 @@ function write(p1, p2, p3 = false) {
             if (i != last) {
                 el.innerHTML = ""
                 break
+            } else {
+                console.log(i)
+                el.innerHTML += "<tspan class='blinky'></tspan>"
+                const blinky = document.querySelector(".blinky")
+                const interval = setInterval(() => {
+                    const prev = blinky.innerHTML
+                    console.log("BLINK", blinky)
+                    if (!prev && prev != "") clearInterval(interval)
+                    else if (prev == "a") blinky.innerHTML = "b"
+                    else blinky.innerHTML = "a"
+                }, 1000)
             }
-            el.innerHTML += "<tspan class='blinky'>|</tspan>"
-            const blinky = $(".blinky")
-            const interval = setInterval(() => {
-                const prev = blinky.html()
-                if (!prev && prev != "") clearInterval(interval)
-                else if (prev == "|") blinky.html("")
-                else blinky.html("|")
-            }, 500)
+
         }
 
     } else {
         $("#keyboard").children("#keys").children().each((index, child) => {
             if (child.getAttribute("inkscape:label").toLowerCase() == key || clear) child.setAttribute("fill", "#e2c196")
         })
+    }
+}
+function upperCase(char) {
+    switch (char) {
+        case "1": return "!"
+        case "2": return "@"
+        case "3": return "#"
+        case "4": return "$"
+        case "5": return "%"
+        case "6": return "'"
+        case "7": return "&"
+        case "8": return "?"
+        case "9": return "("
+        case "0": return ")"
+        default: return char.toUpperCase()
     }
 }
 function wsReady() {
@@ -223,11 +240,12 @@ function reloadLcdStats() {
     ])
     if (lcdUpdating) {
         lcdUpdating.then(() => {
-            write("test", true)
             if (lcdUpdating) {
                 lcdUpdating.then(() => {
                     write("test", true)
                 })
+            } else {
+                write("test",true)
             }
         })
     }
@@ -236,7 +254,8 @@ function reloadLcdStats() {
 function updateLcd(rows = [" ", " ", " ", " ", " ", " "], animate = true) {
     if (lcdUpdating) {
         console.warn("LCD updater busy")
-        lcdUpdating.then(() => {
+        lcdUpdating.then((val) => {
+            lcdUpdating = val
             updateLcd(rows, animate)
         })
     } else {
@@ -257,19 +276,22 @@ function updateLcd(rows = [" ", " ", " ", " ", " ", " "], animate = true) {
                     nextTspan.setAttribute("data-prev", nextTspan.innerHTML)
                     if (animate) nextTspan.innerHTML = ""
                 }
-                i++
             }
             if (animate) {
                 const interval = setInterval(() => {
                     if (i >= lcdRows.length) {
                         if (interval) clearInterval(interval)
-                        lcdUpdating = null
-                        resolve()
-                        console.log(i)
+                        resolve(null)
                     }
                     updateLine()
                     i++
                 }, 100)
+            } else {
+                while (i < lcdRows.length) {
+                    i++
+                    a = !updateLine()
+                }
+                resolve(null)
             }
         })
     }

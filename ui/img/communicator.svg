@@ -42,15 +42,16 @@
      inkscape:snap-page="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
-     inkscape:zoom="4"
-     inkscape:cx="285.15014"
-     inkscape:cy="100.8185"
+     inkscape:zoom="256"
+     inkscape:cx="105.59939"
+     inkscape:cy="86.653274"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-bbox-midpoints="true"
-     inkscape:document-rotation="0" />
+     inkscape:document-rotation="0"
+     inkscape:lockguides="true" />
   <defs
      id="defs1">
     <linearGradient
@@ -120,7 +121,7 @@
        fx="34.395832"
        fy="14.022923"
        r="558.75"
-       gradientTransform="matrix(0.99968036,-0.02528212,0.03242641,1.2821727,-0.44371862,36.335628)"
+       gradientTransform="matrix(0.99968036,-0.02528212,0.03242641,1.2821727,-0.00177688,36.158851)"
        gradientUnits="userSpaceOnUse" />
     <filter
        inkscape:collect="always"
@@ -168,7 +169,7 @@
     </g>
     <g
        id="waveform_view"
-       transform="matrix(0.92565409,0,0,1.0033004,-96.294822,44.804517)">
+       transform="matrix(0.92565409,0,0,1.0033004,-95.852597,44.624081)">
       <rect
          style="font-variation-settings:normal;display:inline;opacity:1;fill:#430400;fill-opacity:1;stroke:none;stroke-width:2.12731;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
          id="rect37"
@@ -203,7 +204,7 @@
     <path
        id="background"
        style="display:inline;fill:url(#radialGradient45);fill-opacity:1;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
-       d="M 13.229166,26.458333 C 5.9002228,26.458333 0,32.358556 0,39.687499 V 224.89583 C 0,232.22477 5.9002228,238.125 13.229166,238.125 H 304.27083 c 7.32894,0 13.22916,-5.90023 13.22916,-13.22917 V 39.687499 c 0,-7.328943 -5.90022,-13.229166 -13.22916,-13.229166 z m 95.052594,55.509272 h 75.84757 c 2.01403,0 3.67367,1.799208 3.67367,3.982186 v 23.891049 c 0,2.18298 -1.65964,3.98167 -3.67367,3.98167 h -75.84757 c -2.01403,0 -3.67368,-1.79869 -3.67368,-3.98167 V 85.949791 c 0,-2.182978 1.65965,-3.982186 3.67368,-3.982186 z" />
+       d="m 13.671108,26.281556 c -7.3289435,0 -13.22916626,5.900223 -13.22916626,13.229166 V 224.71905 c 0,7.32894 5.90022276,13.22917 13.22916626,13.22917 H 304.71277 c 7.32894,0 13.22916,-5.90023 13.22916,-13.22917 V 39.510722 c 0,-7.328943 -5.90022,-13.229166 -13.22916,-13.229166 z M 108.7237,81.790828 h 75.84757 c 2.01403,0 3.67367,1.799208 3.67367,3.982186 v 23.891046 c 0,2.18298 -1.65964,3.98167 -3.67367,3.98167 H 108.7237 c -2.01403,0 -3.67368,-1.79869 -3.67368,-3.98167 V 85.773014 c 0,-2.182978 1.65965,-3.982186 3.67368,-3.982186 z" />
     <g
        id="lcd"
        transform="translate(198.43751)">
@@ -224,39 +225,39 @@
            sodipodi:role="line"
            id="tspan141"
            x="17.757343"
-           y="51.489235"></tspan><tspan
+           y="51.489235" /><tspan
            sodipodi:role="line"
            id="tspan143"
            x="17.757343"
-           y="62.072536"></tspan><tspan
+           y="62.072536" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="72.655838"
-           id="tspan145"></tspan><tspan
+           id="tspan145" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="83.239136"
-           id="tspan147"></tspan><tspan
+           id="tspan147" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="93.822433"
-           id="tspan149"></tspan><tspan
+           id="tspan149" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="104.40573"
-           id="tspan151"></tspan><tspan
+           id="tspan151" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="114.98904"
-           id="tspan153"></tspan><tspan
+           id="tspan153" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="125.57233"
-           id="tspan155"></tspan><tspan
+           id="tspan155" /><tspan
            sodipodi:role="line"
            x="17.757343"
            y="136.15564"
-           id="tspan157"></tspan></text>
+           id="tspan157" /></text>
     </g>
     <g
        id="frequency_adjust"
@@ -270,7 +271,7 @@
            id="scale-4"
            transform="rotate(90)" />
         <rect
-           style="fill:#291200;fill-opacity:1;stroke:none;stroke-width:1.18576;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:0.155895, 4.83272;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;filter:url(#filter306)"
+           style="fill:#331600;fill-opacity:1;stroke:none;stroke-width:1.18576;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:0.155895, 4.83272;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;filter:url(#filter306)"
            id="rect4"
            width="6.4006"
            height="5.2004881"
@@ -339,7 +340,8 @@
     </g>
     <g
        id="keyboard"
-       inkscape:label="keyboard">
+       inkscape:label="keyboard"
+       transform="translate(0,-0.08838835)">
       <g
          id="keys">
         <ellipse
@@ -666,55 +668,135 @@
       <g
          id="g402">
         <text
-           y="171.86328"
-           x="157.72266"
+           y="167.92285"
+           x="157.57874"
            id="text240"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">1</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.7;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan154"
+             x="157.57874"
+             y="167.92285">1</tspan><tspan
+             sodipodi:role="line"
+             x="157.57874"
+             y="171.42285"
+             id="tspan158">!</tspan></text>
         <text
-           y="171.91016"
-           x="172.50586"
+           y="167.17725"
+           x="172.44263"
            id="text243"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">2</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan160"
+             x="172.44263"
+             y="167.17725">2</tspan><tspan
+             sodipodi:role="line"
+             id="tspan162"
+             x="172.44263"
+             y="171.17725">@</tspan></text>
         <text
-           y="171.89258"
-           x="187.42969"
+           y="167.65454"
+           x="187.5"
            id="text246"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">3</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan164"
+             x="187.5"
+             y="167.65454">3</tspan><tspan
+             sodipodi:role="line"
+             id="tspan166"
+             x="187.5"
+             y="171.65454">#</tspan></text>
         <text
-           y="171.91016"
-           x="202.41797"
+           y="167.54956"
+           x="202.46094"
            id="text249"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">4</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan168"
+             x="202.46094"
+             y="167.54956">4</tspan><tspan
+             sodipodi:role="line"
+             id="tspan170"
+             x="202.46094"
+             y="171.54956">$</tspan></text>
         <text
-           y="171.81641"
-           x="217.51758"
+           y="167.59473"
+           x="217.4353"
            id="text252"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">5</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan172"
+             x="217.4353"
+             y="167.59473">5</tspan><tspan
+             sodipodi:role="line"
+             id="tspan174"
+             x="217.4353"
+             y="171.59473">%</tspan></text>
         <text
-           y="171.82227"
-           x="232.40622"
+           y="168.0874"
+           x="232.46091"
            id="text255"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">6</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:1.1;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan176"
+             x="232.46091"
+             y="168.0874">6</tspan><tspan
+             sodipodi:role="line"
+             id="tspan178"
+             x="232.46091"
+             y="173.5874">'</tspan></text>
         <text
-           y="171.85742"
-           x="247.12793"
+           y="167.91309"
+           x="247.44507"
            id="text258"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">7</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.7;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan180"
+             x="247.44507"
+             y="167.91309">7</tspan><tspan
+             sodipodi:role="line"
+             id="tspan182"
+             x="247.44507"
+             y="171.41309">&amp;</tspan></text>
         <text
-           y="171.875"
-           x="262.43555"
+           y="167.69727"
+           x="262.47314"
            id="text261"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">8</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan184"
+             x="262.47314"
+             y="167.69727">8</tspan><tspan
+             sodipodi:role="line"
+             id="tspan186"
+             x="262.47314"
+             y="171.69727">?</tspan></text>
         <text
-           y="171.91016"
-           x="277.41797"
+           y="167.23218"
+           x="277.46582"
            id="text264"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">9</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan188"
+             x="277.46582"
+             y="167.23218">9</tspan><tspan
+             sodipodi:role="line"
+             id="tspan190"
+             x="277.46582"
+             y="171.23218">(</tspan></text>
         <text
-           y="171.88086"
-           x="292.40625"
+           y="167.24438"
+           x="292.46094"
            id="text267"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1">0</text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:0.8;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';text-align:center;text-anchor:middle;fill:#1b0c00;fill-opacity:1"><tspan
+             sodipodi:role="line"
+             id="tspan192"
+             x="292.46094"
+             y="167.24438">0</tspan><tspan
+             sodipodi:role="line"
+             id="tspan194"
+             x="292.46094"
+             y="171.24438">)</tspan></text>
         <text
            y="186.60254"
            x="157.39746"
