@@ -1,8 +1,9 @@
 // TESTING CODE
 
-const url = "ws://192.168.1.114:8080"
+const url = "ws://127.0.0.1:8080"
 
 const ws = new WebSocket(url)
+
 
 let lcdUpdating = null
 let msg = ""
@@ -20,6 +21,18 @@ const freqKnob = {
     origin: null,
     offsetAngle: 0
 }
+
+let powerState = true
+
+
+
+if ("ontouchstart" in document.documentElement) {
+    popup([2], [true], ["Touchscreen input is not fully supported"])
+}
+
+ws.addEventListener("error", err => error(err, "ws_fail"))
+
+
 fetchText("./img/communicator.svg").then(data => {
     $("#svgContainer").html(data)
     $("#frequency_knob").on("mousedown", handleFreqKnob)
@@ -40,7 +53,13 @@ fetchText("./img/communicator.svg").then(data => {
             write(child.hasAttribute("inkscape:label") ? child.getAttribute("inkscape:label") : child.children.length ? child.children[0].innerHTML : child.innerHTML, false)
         })
     })
+    $("#functions").children().on("mousedown", handleFunctionKeys).on("mouseup", handleFunctionKeys)
+    $("#power_toggle").on("click", powerButton)
+
+    $(".no-select").on("selectstart", false)
+
     write("", false, true)
+    popup()
 })
 
 
@@ -49,19 +68,23 @@ fetchText("./img/communicator.svg").then(data => {
 ws.addEventListener("message", (e) => {
     receivedMessages++
     reloadLcdStats()
-    console.log("msg: ", JSON.parse(e.data))
+    //TODO: handle messages properly
+    print(JSON.parse(e.data))
 })
-
+function updatePrintLocation() {
+    const printPaper = $("print_paper")
+}
+function print(text) {
+    console.log(text)
+}
 function broadcast(msg) {
     sentMessages++
     reloadLcdStats()
     ws.send(JSON.stringify({ type: "broadcast", data: { msg: msg } }))
 }
-
 async function fetchText(url) {
     return await (await fetch(url)).text()
 }
-
 function handleFreqKnob(e) {
     switch (e.type) {
         case "mousedown":
@@ -131,17 +154,68 @@ function switchChannel(channel) {
     receivedMessages = 0
     sentMessages = 0
 
+
     ws.send(
         JSON.stringify(
             { type: "freq", data: { freq: channel } }
         )
     )
-
+    if (!powerState) return
     updateLcd([
-        `CH ${channel}`
+        `CH ${channel}`, "", "CONNECTING"
     ])
+    lcdUpdating.then(() => {
+        reloadLcdStats()
+    })
+}
+function handleFunctionKeys(ev) {
+    if (!powerState) return
+    if (ev.type == "mousedown") {
+        const func = ev.currentTarget.id
+        $("#functions").children(`#${func}`).children("rect").css("fill", "#b57b30")
+        switch (func) {
+            case "send":
+                broadcast(msg)
+                msg = ""
+                break;
+            default:
+                break;
+        }
+    } else {
+        $("#functions").find("rect").each((index, child) => {
+            child.style.fill = "#e2c196"
+        })
+    }
+}
+function powerButton() {
+    const pb = $("#power_toggle")
+    powerState = !pb.children(".off.hidden").length
+    console.log(powerState)
+    pb.children(".on").toggleClass("hidden")
+    pb.children(".off").toggleClass("hidden")
+    if (powerState) {
+        updateLcd([" ", "DOOHICKEY", "SERIES 300", " ", " ", " ", "STARTING", "UP"])
+        setTimeout(() => {
+            updateLcd()
+            updateLcd([
+                `CH ${currentChannel}`, "", "CONNECTING"
+            ])
+            setTimeout(reloadLcdStats, 1000)
+            $("#waveform").toggleClass("hidden")
+        }, 1500)
+    } else {
+        msg = ""
+        popup()
+        updateLcd([" ", "DOOHICKEY", "SERIES 300", " ", " ", " ", "SHUTTING", "DOWN", " ", " "])
+        setTimeout(() => {
+            updateLcd()
+            $("#waveform").toggleClass("hidden")
+        }, 1500)
+    }
 }
 function write(p1, p2, p3 = false) {
+
+    if (!powerState) return
 
     let key = p2 == undefined ? p1.key.toLowerCase() : p1.toLowerCase()
     const pressed = p2 == undefined ? p1.type == "keydown" : p2
@@ -189,7 +263,7 @@ function write(p1, p2, p3 = false) {
             return prev
         }, 6)
 
-        if (page) updateLcd(["", "", "", "", "", `Message: ${page + 1}/${page + 1}`], false)
+        updateLcd(["", "", "", "", "", page ? `Message: ${page + 1}/${page + 1}` : "Message: "], false)
 
         for (let i = last; i < $("#lcdText").children().length; i++) {
             const el = $("#lcdText").children().get(i)
@@ -212,6 +286,30 @@ function write(p1, p2, p3 = false) {
             if (child.getAttribute("inkscape:label").toLowerCase() == key || clear) child.setAttribute("fill", "#e2c196")
         })
     }
+}
+function error(err, type) {
+    console.log(err)
+    let message = ""
+    switch (type) {
+        case "ws_fail":
+            message = `Failed to initialize websocket on ${err.target.url}`
+            break;
+        default:
+            break;
+    }
+    console.error(message)
+    popup([0], [true], [message])
+}
+function popup(indexes = [0, 1, 2], ups = [false, false, false], messages = ["", "", ""]) {
+    const popups = $("#popups").children()
+    indexes.forEach((i, index) => {
+        const popup = popups[i]
+        const up = ups[index]
+        const message = messages[index]
+        popup.classList[up ? "add" : "remove"]("up")
+
+        popup.querySelector("title").textContent = message
+    })
 }
 function upperCase(char) {
     switch (char) {
@@ -251,8 +349,7 @@ function reloadLcdStats() {
         })
     }
 }
-
-function updateLcd(rows = [" ", " ", " ", " ", " ", " "], animate = true) {
+function updateLcd(rows = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], animate = true) {
     if (lcdUpdating) {
         console.warn("LCD updater busy")
         lcdUpdating.then((val) => {
@@ -301,11 +398,9 @@ function roundStep(number, increment, offset = 0) {
     return Math.ceil((number - offset) / increment) * increment + offset;
 }
 
+// Math functions
 function lerp(x, y, a) { return x * (1 - a) + y * a }
 function clamp(a, min = 0, max = 1) { return Math.min(max, Math.max(min, a)) }
 function invlerp(x, y, a) { return clamp((a - x) / (y - x)) }
 function range(x1, y1, x2, y2, a) { return lerp(x2, y2, invlerp(x1, y1, a)) }
-
-function angle(p1, p2) {
-    return Math.atan2(p2.y - p1.y, p2.x - p1.x)
-}
+function angle(p1, p2) { return Math.atan2(p2.y - p1.y, p2.x - p1.x) }
