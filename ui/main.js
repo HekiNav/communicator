@@ -165,7 +165,7 @@ function print(text) {
     if (!text) {
         warning("Received empty message")
     }
-    const convertedMD = "<div>"+converter.makeHtml(text)+"</div>"
+    const convertedMD = "<div>" + converter.makeHtml(text) + "</div>"
     //ms per pixel
     const printSpeed = 100
 
@@ -174,7 +174,7 @@ function print(text) {
     printPaper.css({ height: "auto" })
 
     const preHeight = printPaper.height()
-    
+
     // goes to the top because flex-direction column-reverse
     printPaper.append($(convertedMD))
     const postHeight = printPaper.height()
@@ -190,8 +190,15 @@ function print(text) {
 }
 function printClear() {
     const printPaper = $("#print_paper")
-    printPaper.html("")
-    printPaper.css({ height: 0 })
+
+    if (printPaper.is(':animated')) {
+        printPaper.stop()
+    }
+    printPaper.animate({ top: "100vh" }, 500, () => {
+        printPaper.html("")
+        printPaper.css({height: 0})
+        updatePrintLocation()
+    })
 }
 function broadcast(msg) {
     sentMessages++
@@ -342,7 +349,7 @@ function powerButton() {
 }
 // keyboard main function
 function write(p1, p2, p3 = false) {
-    
+
     if (!powerState) return
 
     let key = p2 == undefined ? p1.key.toLowerCase() : p1.toLowerCase()
