@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "unique-username-generator": "^1.5.1",
     "ws": "^8.18.3"
   },
   "scripts": {

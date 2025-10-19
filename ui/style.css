@@ -31,7 +31,7 @@ body {
     padding: 5vh;
     height: 90vh;
 }
-h1,h2,h3,h4,h5,h6,ul {
+h1,h2,h3,h4,h5,h6,ul,p {
     margin: .5rem 0;
 }
 ul, ol {

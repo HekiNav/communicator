@@ -87,6 +87,7 @@ ws.addEventListener("message", (e) => {
     switch (data.type) {
         case "message":
             receivedMessages++
+            reloadLcdStats()
             print(data.data.msg)
             break
         case "error":
@@ -186,11 +187,12 @@ function print(text) {
 function printClear() {
     const printPaper = $("#print_paper")
     printPaper.html("")
-    printPaper.css({height: 0})
+    printPaper.css({ height: 0 })
 }
 function broadcast(msg) {
     sentMessages++
     reloadLcdStats()
+    print("you: " + msg)
     ws.send(JSON.stringify({ type: "broadcast", data: { msg: msg } }))
 }
 async function fetchText(url) {
@@ -379,7 +381,7 @@ function write(p1, p2, p3 = false) {
                 const next = prev + 1 < $("#lcdText").children().length ? prev + 1 : first
                 if (next == first) page++
                 $("#lcdText").children().get(next).innerHTML = ""
-                return next 
+                return next
             }
             return prev
         }, 6)

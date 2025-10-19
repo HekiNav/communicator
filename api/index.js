@@ -1,4 +1,5 @@
 import { WebSocketServer } from "ws"
+import { generateUsername } from "unique-username-generator";
 
 const wss = new WebSocketServer({ port: process.env.PORT })
 
@@ -8,13 +9,13 @@ wss.on("listening", () => {
 
 const frequencies = new Map()
 
-wss.on("connection", (socket) => {
+wss.on("connection", (socket, request) => {
     let currentFreq = null
+    const userName = generateUsername("",0,10)
 
     socket.on("message", (msg) => {
         const { data, type } = JSON.parse(msg)
 
-        console.log(data)
 
         if (!data) return error(socket, "invalid message.data object")
         if (!type) return error(socket, "invalid message.type object")
@@ -40,7 +41,7 @@ wss.on("connection", (socket) => {
                 if (!currentFreq) return error(socket, "You are not currently on any frequency")
                 if (data.msg == "") return warning(socket, "The message you sent was empty and thus not broadcasted")
                 frequencyCheck(currentFreq, data.msg)
-                broadcast(data.msg, socket, currentFreq)
+                broadcast(data.msg, socket, currentFreq, userName)
                 break
             default:
                 return error(socket, `Unknown message type: ${type}`)
@@ -54,10 +55,10 @@ wss.on("connection", (socket) => {
     })
 })
 
-function broadcast(msg, sentSocket, freq) {
+function broadcast(msg, sentSocket, freq, id) {
     for (const client of frequencies.get(freq)) {
         if (client.readyState == 1 && client != sentSocket) {
-            client.send(JSON.stringify({ type: "message", data: { freq: freq, msg: msg } }))
+            client.send(JSON.stringify({ type: "message", data: { freq: freq, msg: id + ": " + msg } }))
         }
     } 
 }
@@ -65,7 +66,7 @@ function broadcast(msg, sentSocket, freq) {
 function frequencyCheck(freq, msg) {
     switch (freq) {
         case 300:
-            broadcast("msg", null, 300)
+            broadcast(msg, null, 300, "echo")
             break;
         default:
             break;
