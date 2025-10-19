@@ -1,9 +1,13 @@
-// TESTING CODE
-
 const url = "ws://127.0.0.1:8080"
 
 const ws = new WebSocket(url)
 
+const converter = new showdown.Converter({
+    tables: true,
+    tasklists: true,
+    strikethrough: true,
+    emojis: true
+})
 
 let lcdUpdating = null
 let msg = ""
@@ -33,8 +37,11 @@ if ("ontouchstart" in document.documentElement) {
 ws.addEventListener("error", err => error(err, "ws_fail"))
 
 
-fetchText("./img/communicator.svg").then(data => {
-    $("#svgContainer").html(data)
+Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.json")]).then(([svg, tutorialData]) => {
+
+    if (localStorage.getItem("tutorial_complete") == "true") tutorial(tutorialData)
+
+    $("#svgContainer").html(svg)
     $("#frequency_knob").on("mousedown", handleFreqKnob)
     $("body").on("mousemove", handleFreqKnob)
         .on("mouseup", handleFreqKnob)
@@ -57,7 +64,11 @@ fetchText("./img/communicator.svg").then(data => {
     $("#power_toggle").on("click", powerButton)
 
     $(".no-select").on("selectstart", false)
+    $("#popups").each((index, element) => popup([index], [false]))
 
+    window.addEventListener("resize", updatePrintLocation)
+
+    updatePrintLocation()
     write("", false, true)
     popup()
 })
@@ -66,16 +77,64 @@ fetchText("./img/communicator.svg").then(data => {
 
 
 ws.addEventListener("message", (e) => {
-    receivedMessages++
     reloadLcdStats()
-    //TODO: handle messages properly
-    print(JSON.parse(e.data))
+
+    const data = JSON.parse(e.data)
+
+    switch (data.type) {
+        case "message":
+            receivedMessages++
+            print(data.data.msg)
+            break
+        case "error":
+            error(data.data.msg)
+            break
+        case "warning":
+            warning(data.data.msg)
+        default:
+            break
+    }
 })
 function updatePrintLocation() {
-    const printPaper = $("print_paper")
+    const printPaper = $("#print_paper")
+    const location = document.querySelector("#printer_paper_location").getBoundingClientRect()
+
+    printPaper.css({
+        left: location.left,
+        top: location.top,
+        width: `calc(${location.width}px - 4em)`
+    })
 }
+
+function tutorial(data) {
+
+}
+
 function print(text) {
     console.log(text)
+    if (!text) {
+        warning("Received empty message")
+    }
+    const convertedMD = converter.makeHtml(text)
+    //ms per pixel
+    const printSpeed = 100
+
+    const printPaper = $("#print_paper")
+
+    printPaper.css({ height: "auto" })
+
+    const preHeight = printPaper.height()
+    printPaper.prepend(convertedMD).reverseChildren()
+    const postHeight = printPaper.height()
+
+    printPaper.css({ height: preHeight })
+
+    printPaper.animate(
+        { height: postHeight },
+        (postHeight - preHeight) * printSpeed,
+        "linear"
+    )
+
 }
 function broadcast(msg) {
     sentMessages++
@@ -84,6 +143,9 @@ function broadcast(msg) {
 }
 async function fetchText(url) {
     return await (await fetch(url)).text()
+}
+async function fetchJson(url) {
+    return await (await fetch(url)).json()
 }
 function handleFreqKnob(e) {
     switch (e.type) {
@@ -177,6 +239,7 @@ function handleFunctionKeys(ev) {
             case "send":
                 broadcast(msg)
                 msg = ""
+                write("test", false)
                 break;
             default:
                 break;
@@ -205,6 +268,8 @@ function powerButton() {
         }, 1500)
     } else {
         msg = ""
+        receivedMessages = 0
+        sentMessages = 0
         popup()
         updateLcd([" ", "DOOHICKEY", "SERIES 300", " ", " ", " ", "SHUTTING", "DOWN", " ", " "])
         setTimeout(() => {
@@ -299,6 +364,9 @@ function error(err, type) {
     }
     console.error(message)
     popup([0], [true], [message])
+}
+function warning(message) {
+    popup([1], [true], [message])
 }
 function popup(indexes = [0, 1, 2], ups = [false, false, false], messages = ["", "", ""]) {
     const popups = $("#popups").children()
@@ -404,3 +472,10 @@ function clamp(a, min = 0, max = 1) { return Math.min(max, Math.max(min, a)) }
 function invlerp(x, y, a) { return clamp((a - x) / (y - x)) }
 function range(x1, y1, x2, y2, a) { return lerp(x2, y2, invlerp(x1, y1, a)) }
 function angle(p1, p2) { return Math.atan2(p2.y - p1.y, p2.x - p1.x) }
+
+$.fn.reverseChildren = function () {
+    return this.each(function () {
+        var $this = $(this);
+        $this.children().each(function () { $this.prepend(this) });
+    });
+};

@@ -36,8 +36,9 @@ wss.on("connection", (socket) => {
                 frequencies.get(currentFreq).add(socket)
                 break;
             case "broadcast":
-                if (!checkParams(socket, data, "msg")) return error(socket, "aa")
-                if (!currentFreq) return error("You are not currently on any frequency")
+                if (!checkParams(socket, data, "msg")) return
+                if (!currentFreq) return error(socket,"You are not currently on any frequency")
+                if (data.msg == "") return warning(socket,"The message you sent was empty and thus not broadcasted")
                 for (const client of frequencies.get(currentFreq)) {
                     if (client.readyState == 1 && client != socket) {
                         client.send(JSON.stringify({ type: "message", data: { freq: currentFreq, msg: data.msg } }))
@@ -57,7 +58,7 @@ wss.on("connection", (socket) => {
 })
 
 function checkParams(socket, object, ...keys) {
-    const missing = keys.reduce((prev, curr) => object[curr] ? prev : [...prev, curr], [])
+    const missing = keys.reduce((prev, curr) => object[curr] || object[curr] == "" ? prev : [...prev, curr], [])
     if (missing.length) error(socket, `Following keys from the message.data object are missing: ${missing}`)
     return !missing.length
 }
@@ -66,4 +67,7 @@ function checkParams(socket, object, ...keys) {
 
 function error(socket, msg) {
     socket.send(JSON.stringify({ type: "error", data: { msg: msg } }))
+}
+function warning(socket, msg) {
+    socket.send(JSON.stringify({ type: "warning", data: { msg: msg } }))
 }
