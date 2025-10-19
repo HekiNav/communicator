@@ -17,6 +17,15 @@ Available at [https://hekinav.hackclub.app/communicator-api/](https://hekinav.ha
 
 WebSocket only!
 
+Messages in both directions are always stringified JSON objects as such: 
+
+```json
+{
+    "type": "string",
+    "data": {}
+}
+```
+
 ### Running locally
 
 1. move to the api directory `cd api`
