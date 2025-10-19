@@ -351,6 +351,8 @@ function write(p1, p2, p3 = false) {
                 case "backspace":
                     msg = msg.substring(0, msg.length - 1)
                     break
+                case "enter":
+                    msg += "\n"
                 default:
                     break
             }
@@ -371,8 +373,8 @@ function write(p1, p2, p3 = false) {
         $("#lcdText").children().get(first).innerHTML = ""
         const last = msg.split("").reduce((prev, curr) => {
             const tspan = $("#lcdText").children().get(prev)
-            tspan.innerHTML += curr
-            if (tspan.getBBox().width > maxWidth) {
+            tspan.innerHTML += curr == "\n" ? "↵" : curr
+            if (tspan.getBBox().width > maxWidth || curr == "\n") {
                 const next = prev + 1 < $("#lcdText").children().length ? prev + 1 : first
                 if (next == first) page++
                 $("#lcdText").children().get(next).innerHTML = ""
