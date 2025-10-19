@@ -163,7 +163,7 @@ function print(text) {
     if (!text) {
         warning("Received empty message")
     }
-    const convertedMD = converter.makeHtml(text)
+    const convertedMD = "<div>"+converter.makeHtml(text)+"</div>"
     //ms per pixel
     const printSpeed = 100
 
@@ -172,7 +172,8 @@ function print(text) {
     printPaper.css({ height: "auto" })
 
     const preHeight = printPaper.height()
-    printPaper.prepend(convertedMD).reverseChildren()
+    
+    printPaper.append($(convertedMD))
     const postHeight = printPaper.height()
 
     printPaper.css({ height: preHeight })
