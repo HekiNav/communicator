@@ -42,13 +42,13 @@
      inkscape:snap-page="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="121.66688"
-     inkscape:cy="95.798404"
+     inkscape:zoom="11.313708"
+     inkscape:cx="49.057219"
+     inkscape:cy="23.839945"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="printer"
+     inkscape:current-layer="popups"
      inkscape:snap-bbox-midpoints="true"
      inkscape:document-rotation="0"
      inkscape:lockguides="true"
@@ -309,6 +309,14 @@
            id="path1884"
            style="fill:#00aad4;stroke-width:0.0125" />
       </g>
+      <rect
+         style="opacity:0.996;fill:transparent;stroke-width:100;stroke-linecap:round;stroke-dasharray:10, 10;stroke-dashoffset:1"
+         id="popup-boundary"
+         width="48.936928"
+         height="13.022174"
+         x="26.458334"
+         y="13.229166"
+         ry="2.6458299" />
     </g>
     <g
        id="waveform_view"
@@ -444,14 +452,14 @@
         <text
            xml:space="preserve"
            style="font-size:5.29167px;line-height:26.4582px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed';text-align:center;text-decoration-color:#000000;letter-spacing:0px;text-anchor:middle;fill:#e2c196;fill-opacity:1;stroke:none;stroke-width:2.59292;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:0.340897, 10.5678;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-           x="40.209225"
+           x="12.198576"
            y="117"
            id="text4"
            inkscape:label="text4">200 </text>
         <text
            xml:space="preserve"
            style="font-size:5.29167px;line-height:26.4582px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed';text-align:center;text-decoration-color:#000000;letter-spacing:0px;text-anchor:middle;fill:#e2c196;fill-opacity:1;stroke:none;stroke-width:2.59292;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:0.340897, 10.5678;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-           x="10.539845"
+           x="41.986935"
            y="117"
            id="text4-4">1000 </text>
       </g>
@@ -1153,7 +1161,8 @@
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';fill:#55310d;fill-opacity:1;stroke-width:0.317146">SEND</tspan></text>
       </g>
       <g
-         id="nothing">
+         id="nothing"
+         inkscape:label="enter">
         <rect
            style="fill:#e2c196;fill-opacity:1;stroke:none;stroke-width:7.55906;stroke-linecap:square"
            id="rect1023-8"
@@ -1162,6 +1171,17 @@
            x="134.59619"
            y="205.04886"
            ry="5.2270293" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5px;line-height:1.25;font-family:sans-serif;fill:#55310d;fill-opacity:1;stroke:none;stroke-width:0.317146"
+           x="135.15491"
+           y="218.31473"
+           id="text1047-5"><tspan
+             sodipodi:role="line"
+             id="tspan1045-4"
+             x="135.15491"
+             y="218.31473"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5px;font-family:'Tw Cen MT Condensed';-inkscape-font-specification:'Tw Cen MT Condensed, ';fill:#55310d;fill-opacity:1;stroke-width:0.317146">ENTER</tspan></text>
       </g>
     </g>
     <g

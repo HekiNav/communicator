@@ -39,7 +39,6 @@ ws.addEventListener("error", err => error(err, "ws_fail"))
 
 Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.json")]).then(([svg, tutorialData]) => {
 
-    if (localStorage.getItem("tutorial_complete") != "true") tutorial(tutorialData)
 
     $("#svgContainer").html(svg)
     $("#frequency_knob").on("mousedown", handleFreqKnob)
@@ -71,6 +70,9 @@ Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.jso
     updatePrintLocation()
     write("", false, true)
     popup()
+
+    if (localStorage.getItem("tutorial_complete") != "true") tutorial(tutorialData)
+
 })
 
 
@@ -111,34 +113,46 @@ async function tutorial(data) {
     for (const view of data) {
         await tutorialView(view)
     }
-    console.log("tour done")
+    localStorage.setItem("tutorial_complete", "true")
     $("#focus_box").toggleClass("hidden")
 }
 function tutorialView(data) {
+
     return new Promise((resolve, reject) => {
-        const target = $(data.selector).get(0)
-        const targetBox = target ? target.getBoundingClientRect() : { x: 0, y: 0, width: 0, height: window.innerHeight }
+        function e() {
+            const target = $(data.selector).get(0)
+            const targetBox = target ? target.getBoundingClientRect() : { x: 0, y: 0, width: 0, height: window.innerHeight }
 
-        console.log(targetBox)
+            console.log(targetBox, data.selector)
 
-        const box = document.getElementById("focus_box")
+            const box = document.getElementById("focus_box")
 
-        const descText = document.querySelector("#focus_box .description")
-        descText.innerHTML = data.text
+            const descText = document.querySelector("#focus_box .description")
+            descText.innerHTML = data.text
 
-        const textOnRight = targetBox.x + targetBox.width * 0.5 > window.innerWidth * 0.5
-        descText.classList[textOnRight ? "add" : "remove"]("text-right")
+            const textOnRight = targetBox.x + targetBox.width * 0.5 > window.innerWidth * 0.5
+            descText.classList[textOnRight ? "add" : "remove"]("text-right")
 
+            if (data.selector == "#popup-boundary") {
+                popup([0, 1, 2], [true, true, true])
+            } else {
+                popup()
+            }
+            if (data.selector == "#printer") {
+                print("Test Print")
+            } else {
+                printClear()
+            }
 
-        box.style.setProperty("--x", targetBox.x + "px")/*  */
-        box.style.setProperty("--y", targetBox.y + "px")
-        box.style.setProperty("--width", targetBox.width + "px")
-        box.style.setProperty("--height", targetBox.height + "px")
+            box.style.setProperty("--x", targetBox.x + "px")/*  */
+            box.style.setProperty("--y", targetBox.y + "px")
+            box.style.setProperty("--width", targetBox.width + "px")
+            box.style.setProperty("--height", targetBox.height + "px")
+            window.addEventListener("click", resolve, { once: true })
+            window.addEventListener("resize", e, { once: true })
 
-
-
-        window.addEventListener("click", resolve, { once: true })
-
+        }
+        e()
     })
 }
 
@@ -167,6 +181,11 @@ function print(text) {
         "linear"
     )
 
+}
+function printClear() {
+    const printPaper = $("#print_paper")
+    printPaper.html("")
+    printPaper.css({height: 0})
 }
 function broadcast(msg) {
     sentMessages++
@@ -273,6 +292,8 @@ function handleFunctionKeys(ev) {
                 msg = ""
                 write("test", false)
                 break;
+            case "enter":
+                write("enter", true)
             default:
                 break;
         }
@@ -401,14 +422,15 @@ function warning(message) {
     popup([1], [true], [message])
 }
 function popup(indexes = [0, 1, 2], ups = [false, false, false], messages = ["", "", ""]) {
-    const popups = $("#popups").children()
+    const popups = $("#popups").children(".popup").toArray()
     indexes.forEach((i, index) => {
-        const popup = popups[i]
+        const popupGroup = popups[i]
+
         const up = ups[index]
         const message = messages[index]
-        popup.classList[up ? "add" : "remove"]("up")
+        popupGroup.classList[up ? "add" : "remove"]("up")
 
-        popup.querySelector("title").textContent = message
+        popupGroup.querySelector("title").textContent = message
     })
 }
 function upperCase(char) {

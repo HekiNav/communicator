@@ -20,6 +20,10 @@
         "text": "Up here is the power switch. It's function is pretty self explanatory. It is on by default for convenience."
     },
     {
+        "selector": "#popup-boundary",
+        "text": "These are the popups. They can display error, warnings, or info. They pop up when active. Hover over to see the message."
+    },
+    {
         "selector": "#printer",
         "text": "This is the printer. All the messages you receive will be printed out from here."
     },
@@ -29,11 +33,11 @@
     },
     {
         "selector": "#keyboard",
-        "text": "You can type out your messages here. Basic markdown syntax is supported: <h1># Headers, *<i>italics</i>*,</h1><h2>## Smaller headers, **<b>bolding</b>**,</h2> Lists, links and images work too."
+        "text": "You can type out your messages here. Basic markdown syntax is supported: <h1># Headers, *<i>italics</i>*, **<b>bolding</b>**</h1>, Lists, links and images work too."
     },
     {
         "selector": "#functions",
-        "text": "Last but not least: the function keys.<br>The SEND key broadcasts your message to the current channel. The enter key just creates a line break in your message."
+        "text": "Last but not least: the function keys.<br>The SEND key broadcasts your message to the current channel. The ENTER key just creates a line break in your message."
     },
     {
         "selector":null,
