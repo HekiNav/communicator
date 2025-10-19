@@ -39,7 +39,7 @@ ws.addEventListener("error", err => error(err, "ws_fail"))
 
 Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.json")]).then(([svg, tutorialData]) => {
 
-    if (localStorage.getItem("tutorial_complete") == "true") tutorial(tutorialData)
+    if (localStorage.getItem("tutorial_complete") != "true") tutorial(tutorialData)
 
     $("#svgContainer").html(svg)
     $("#frequency_knob").on("mousedown", handleFreqKnob)
@@ -106,8 +106,40 @@ function updatePrintLocation() {
     })
 }
 
-function tutorial(data) {
+async function tutorial(data) {
+    $("#focus_box").toggleClass("hidden")
+    for (const view of data) {
+        await tutorialView(view)
+    }
+    console.log("tour done")
+    $("#focus_box").toggleClass("hidden")
+}
+function tutorialView(data) {
+    return new Promise((resolve, reject) => {
+        const target = $(data.selector).get(0)
+        const targetBox = target ? target.getBoundingClientRect() : { x: 0, y: 0, width: 0, height: window.innerHeight }
 
+        console.log(targetBox)
+
+        const box = document.getElementById("focus_box")
+
+        const descText = document.querySelector("#focus_box .description")
+        descText.innerHTML = data.text
+
+        const textOnRight = targetBox.x + targetBox.width * 0.5 > window.innerWidth * 0.5
+        descText.classList[textOnRight ? "add" : "remove"]("text-right")
+
+
+        box.style.setProperty("--x", targetBox.x + "px")/*  */
+        box.style.setProperty("--y", targetBox.y + "px")
+        box.style.setProperty("--width", targetBox.width + "px")
+        box.style.setProperty("--height", targetBox.height + "px")
+
+
+
+        window.addEventListener("click", resolve, { once: true })
+
+    })
 }
 
 function print(text) {

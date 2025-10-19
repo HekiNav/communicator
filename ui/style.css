@@ -79,25 +79,35 @@ svg {
     flex-direction: column-reverse;
     height: 0;
 }
-#focus_circle {
-    --x: 20px;
-    --y: 80px;
-    --size: 400px;
+#focus_box {
+    transition: 1s ease-in-out;
+    --x: 0;
+    --y: 0;
+    --width: 0;
+    --height: 0;
     background-color: rgba(0, 0, 0, 0.6);
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
-    mask: url("./img/circle.svg") var(--x)var(--y)/var(--size) no-repeat exclude,linear-gradient(#000 0 0) ;
+    mask: linear-gradient(#000 0 0) var(--x)var(--y)/var(--width) var(--height) no-repeat exclude,linear-gradient(#000 0 0) ;
 }
-#focus_circle .description{
+#focus_box .description{
+    transition: 1s ease-in-out;
     font-size: 1.5em;
     color: white;
     position: absolute;
     top: var(--y);
-    left: calc(var(--x) + var(--size) + 1em);
-    height: var(--size);
+    left: calc(var(--x) + var(--width) + 1em);
+    height: var(--height);
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 40vw;
+}
+#focus_box .description.text-right {
+    align-items: end;
+    text-align: end;
+    left: auto;
+    right: calc((100vw - var(--x) ) + 1em);
 }

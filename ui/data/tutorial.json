@@ -1,6 +1,38 @@
 [
     {
         "selector": null,
-        "text": "Welcome!<br>This is a quick tour of the ui.<br>Click anything to proceed."
+        "text": "Welcome to the <i>Doohickey Series 300 Communicator!</i><br>This is a quick tour of the ui.<br>Click anything to proceed."
+    },
+    {
+        "selector": "#lcd",
+        "text": "This is the main display. It shows info about the frequency you are currently on. The bottom 4 rows act as the input field to type your message. More about input later."
+    },
+    {
+        "selector": "#frequency_scale",
+        "text": "Here is the frequency adjustment dial. You can interact with it by dragging it. It snaps to the 800 available channels."
+    },
+    {
+        "selector": "#waveform_view rect",
+        "text": "This box is just a visual thing that moves with the frequency dial."
+    },
+    {
+        "selector": "#power_toggle",
+        "text": "Up here is the power switch. It's function is pretty self explanatory. It is on by default for convenience."
+    },
+    {
+        "selector": "#printer",
+        "text": "This is the printer. All the messages you receive will be printed out from here."
+    },
+    {
+        "selector": "#keyboard",
+        "text": "Almost done! This is the keyboard. You can use it to write or use your devices built-in keyboard that is synchronised to this one."
+    },
+    {
+        "selector": "#keyboard",
+        "text": "You can type out your messages here. Basic markdown syntax is supported: <h1># Headers, *<i>italics</i>*,</h1><h2>## Smaller headers, **<b>bolding</b>**,</h2> Lists, links and images work too."
+    },
+    {
+        "selector": "#functions",
+        "text": "Last but not least: the function keys.<br>The SEND key broadcasts your message to the current channel. The enter key just creates a line break in your message."
     }
 ]
