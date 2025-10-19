@@ -1,4 +1,5 @@
-const url = "ws://127.0.0.1:8080"
+// Auto detect dev and prod and use different endpoints
+const url = window.location.href == "http://127.0.0.1:5500/" ? "ws://127.0.0.1:8080" : "ws://hekinav.hackclub.app/communicator-api/"
 
 const ws = new WebSocket(url)
 
@@ -6,7 +7,8 @@ const converter = new showdown.Converter({
     tables: true,
     tasklists: true,
     strikethrough: true,
-    emojis: true
+    emoji: true,
+    simpleLineBreaks: true
 })
 
 let lcdUpdating = null
@@ -27,7 +29,6 @@ const freqKnob = {
 }
 
 let powerState = true
-
 
 
 if ("ontouchstart" in document.documentElement) {
@@ -378,7 +379,7 @@ function write(p1, p2, p3 = false) {
                 const next = prev + 1 < $("#lcdText").children().length ? prev + 1 : first
                 if (next == first) page++
                 $("#lcdText").children().get(next).innerHTML = ""
-                return next
+                return next 
             }
             return prev
         }, 6)
@@ -389,7 +390,7 @@ function write(p1, p2, p3 = false) {
             const el = $("#lcdText").children().get(i)
             if (i != last) {
                 el.innerHTML = ""
-                break
+                continue
             }
             el.innerHTML += "<tspan class='blinky'>|</tspan>"
             const blinky = $(".blinky")

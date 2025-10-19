@@ -33,7 +33,7 @@
     },
     {
         "selector": "#keyboard",
-        "text": "You can type out your messages here. Basic markdown syntax is supported: <h1># Headers, *<i>italics</i>*, **<b>bolding</b>**</h1>, Lists, links and images work too."
+        "text": "You can type out your messages here. Basic markdown syntax is supported: <h1># Headers, *<i>italics</i>*, **<b>bolding</b>**</h1> Lists, links, emojis e.g. :sob: and images work too."
     },
     {
         "selector": "#functions",

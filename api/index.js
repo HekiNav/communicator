@@ -37,13 +37,9 @@ wss.on("connection", (socket) => {
                 break;
             case "broadcast":
                 if (!checkParams(socket, data, "msg")) return
-                if (!currentFreq) return error(socket,"You are not currently on any frequency")
-                if (data.msg == "") return warning(socket,"The message you sent was empty and thus not broadcasted")
-                for (const client of frequencies.get(currentFreq)) {
-                    if (client.readyState == 1 && client != socket) {
-                        client.send(JSON.stringify({ type: "message", data: { freq: currentFreq, msg: data.msg } }))
-                    }
-                }
+                if (!currentFreq) return error(socket, "You are not currently on any frequency")
+                if (data.msg == "") return warning(socket, "The message you sent was empty and thus not broadcasted")
+                broadcast(data.msg, socket, currentFreq)
                 break
             default:
                 return error(socket, `Unknown message type: ${type}`)
@@ -56,6 +52,14 @@ wss.on("connection", (socket) => {
         }
     })
 })
+
+function broadcast(msg, sentSocket, freq) {
+    for (const client of frequencies.get(currentFreq)) {
+        if (client.readyState == 1 && client != sentSocket) {
+            client.send(JSON.stringify({ type: "message", data: { freq: freq, msg: msg } }))
+        }
+    }
+}
 
 function checkParams(socket, object, ...keys) {
     const missing = keys.reduce((prev, curr) => object[curr] || object[curr] == "" ? prev : [...prev, curr], [])
