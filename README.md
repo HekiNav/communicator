@@ -11,7 +11,9 @@ A fun app where you can fiddle with a retro style radio transmitter/receiver.
 [https://hekinav.github.io/communicator/](https://hekinav.github.io/communicator/)
 
 Video
-<video controls src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/847aafd9b754d3c18d58caf63231d517589d5b9f_comm_demo.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/eca18fcb-0138-4c4f-806f-77b7ed5e4d03
+
 
 ## API
 
