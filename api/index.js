@@ -14,12 +14,13 @@ const frequencies = new Map()
 
 wss.on("connection", (socket, request) => {
     let currentFreq = null
-    const userName = generateUsername("", 0, 10)
+    //random name e.g. unanticipated-mold48 
+    const userName = generateUsername("-",2)
 
     socket.on("message", (msg) => {
         const { data, type } = JSON.parse(msg)
 
-
+        // lots of error handling
         if (!data) return error(socket, "invalid message.data object")
         if (!type) return error(socket, "invalid message.type object")
 
@@ -91,10 +92,12 @@ function warning(socket, msg) {
     socket.send(JSON.stringify({ type: "warning", data: { msg: msg } }))
 }
 
+// fun addon that send the place the ISS is currently over to channel 610
 function issTracker() {
     console.log("ISS TRACKING")
     setInterval(() => {
         const freq = frequencies.get(610)
+        // only run if someone is listening
         if (freq && freq.size) {
             getIssData()
         }

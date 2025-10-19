@@ -37,10 +37,10 @@ if ("ontouchstart" in document.documentElement) {
 
 ws.addEventListener("error", err => error(err, "ws_fail"))
 
-
+// gets the svg and tutorial data
 Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.json")]).then(([svg, tutorialData]) => {
 
-
+    // add the svg to the dom and inits all that depends on it
     $("#svgContainer").html(svg)
     $("#frequency_knob").on("mousedown", handleFreqKnob)
     $("body").on("mousemove", handleFreqKnob)
@@ -68,10 +68,12 @@ Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.jso
 
     window.addEventListener("resize", updatePrintLocation)
 
+    // some just in case resetting
     updatePrintLocation()
     write("", false, true)
     popup()
 
+    // start the tutorial view if the user hasnt completed ir
     if (localStorage.getItem("tutorial_complete") != "true") tutorial(tutorialData)
 
 })
@@ -80,7 +82,7 @@ Promise.all([fetchText("./img/communicator.svg"), fetchJson("./data/tutorial.jso
 
 
 ws.addEventListener("message", (e) => {
-    reloadLcdStats()
+    //messages from ws
 
     const data = JSON.parse(e.data)
 
@@ -99,6 +101,8 @@ ws.addEventListener("message", (e) => {
             break
     }
 })
+
+//updates the offsets on #print_paper in case the window is resized
 function updatePrintLocation() {
     const printPaper = $("#print_paper")
     const location = document.querySelector("#printer_paper_location").getBoundingClientRect()
@@ -113,6 +117,7 @@ function updatePrintLocation() {
 async function tutorial(data) {
     $("#focus_box").toggleClass("hidden")
     for (const view of data) {
+        // waits until the user proceeds
         await tutorialView(view)
     }
     localStorage.setItem("tutorial_complete", "true")
@@ -124,8 +129,6 @@ function tutorialView(data) {
         function e() {
             const target = $(data.selector).get(0)
             const targetBox = target ? target.getBoundingClientRect() : { x: 0, y: 0, width: 0, height: window.innerHeight }
-
-            console.log(targetBox, data.selector)
 
             const box = document.getElementById("focus_box")
 
@@ -157,9 +160,8 @@ function tutorialView(data) {
         e()
     })
 }
-
+// prints a piece of markdown text as html from the printer
 function print(text) {
-    console.log(text)
     if (!text) {
         warning("Received empty message")
     }
@@ -173,6 +175,7 @@ function print(text) {
 
     const preHeight = printPaper.height()
     
+    // goes to the top because flex-direction column-reverse
     printPaper.append($(convertedMD))
     const postHeight = printPaper.height()
 
@@ -205,8 +208,7 @@ async function fetchJson(url) {
 function handleFreqKnob(e) {
     switch (e.type) {
         case "mousedown":
-
-
+            // update offsets
 
             const { x, y, width, height } = document.getElementById("frequency_knob").getBoundingClientRect()
 
@@ -221,6 +223,7 @@ function handleFreqKnob(e) {
             freqKnob.offsetAngle = transform ? Number(transform.match(/rotate\((.*)\)/)[1]) : 0
             break;
         case "mouseup":
+            // actually switch the channel
             freqKnob.active = false
 
             const current = $("#frequency_knob").attr("transform") ? Number($("#frequency_knob").attr("transform").match(/rotate\((.*)\)/)[1]) : 0
@@ -232,6 +235,8 @@ function handleFreqKnob(e) {
             break;
         case "mousemove":
             if (!freqKnob.active) return
+
+            // big math to calculate the direction the knob should point at
 
             const limits = [215, 145]
 
@@ -254,7 +259,6 @@ function handleFreqKnob(e) {
 
             $("#waveform").attr("transform", `scale(${wavescale},1)`)
             $("#frequency_knob").attr("transform-origin", "center")
-
 
             $("#frequency_knob").attr("transform", `rotate(${snappedAngle})`)
             $("#frequency_knob").attr("transform-origin", "center")
@@ -284,6 +288,7 @@ function switchChannel(channel) {
     lcdUpdating.then(() => {
         reloadLcdStats()
     })
+    printClear()
 }
 function handleFunctionKeys(ev) {
     if (!powerState) return
@@ -310,10 +315,10 @@ function handleFunctionKeys(ev) {
 function powerButton() {
     const pb = $("#power_toggle")
     powerState = !pb.children(".off.hidden").length
-    console.log(powerState)
     pb.children(".on").toggleClass("hidden")
     pb.children(".off").toggleClass("hidden")
     if (powerState) {
+        // the lcdUpdate function is badly made so this mess exists because of that
         updateLcd([" ", "DOOHICKEY", "SERIES 300", " ", " ", " ", "STARTING", "UP"])
         setTimeout(() => {
             updateLcd()
@@ -335,8 +340,9 @@ function powerButton() {
         }, 1500)
     }
 }
+// keyboard main function
 function write(p1, p2, p3 = false) {
-
+    
     if (!powerState) return
 
     let key = p2 == undefined ? p1.key.toLowerCase() : p1.toLowerCase()
@@ -412,7 +418,6 @@ function write(p1, p2, p3 = false) {
     }
 }
 function error(err, type) {
-    console.log(err)
     let message = ""
     switch (type) {
         case "ws_fail":
@@ -425,8 +430,10 @@ function error(err, type) {
     popup([0], [true], [message])
 }
 function warning(message) {
+    console.warn(message)
     popup([1], [true], [message])
 }
+// error popups at the top, popup() clears them
 function popup(indexes = [0, 1, 2], ups = [false, false, false], messages = ["", "", ""]) {
     const popups = $("#popups").children(".popup").toArray()
     indexes.forEach((i, index) => {
@@ -479,6 +486,7 @@ function reloadLcdStats() {
 }
 function updateLcd(rows = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], animate = true) {
     if (lcdUpdating) {
+        // if lcd is animating, wait
         console.warn("LCD updater busy")
         lcdUpdating.then((val) => {
             lcdUpdating = val
@@ -500,6 +508,7 @@ function updateLcd(rows = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], an
 
                 if (nextTspan && animate) {
                     nextTspan.setAttribute("data-prev", nextTspan.innerHTML)
+                    // for the wave effect clear the next row
                     nextTspan.innerHTML = ""
                 }
             }
@@ -513,9 +522,10 @@ function updateLcd(rows = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], an
                     i++
                 }, 100)
             } else {
+                //hopefully this doesnt get stuck and crash the browser
                 while (i < lcdRows.length) {
                     i++
-                    a = !updateLine()
+                    updateLine()
                 }
                 resolve(null)
             }
@@ -533,9 +543,3 @@ function invlerp(x, y, a) { return clamp((a - x) / (y - x)) }
 function range(x1, y1, x2, y2, a) { return lerp(x2, y2, invlerp(x1, y1, a)) }
 function angle(p1, p2) { return Math.atan2(p2.y - p1.y, p2.x - p1.x) }
 
-$.fn.reverseChildren = function () {
-    return this.each(function () {
-        var $this = $(this);
-        $this.children().each(function () { $this.prepend(this) });
-    });
-};
