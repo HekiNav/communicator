@@ -1,5 +1,5 @@
 // Auto detect dev and prod and use different endpoints
-const url = window.location.href == "http://127.0.0.1:5500/" ? "ws://127.0.0.1:8080" : "ws://hekinav.hackclub.app/communicator-api/"
+const url = window.location.href == "http://127.0.0.1:5500/" ? "ws://127.0.0.1:8080" : "wss://hekinav.hackclub.app/communicator-api/"
 
 const ws = new WebSocket(url)
 
