@@ -34,5 +34,9 @@
     {
         "selector": "#functions",
         "text": "Last but not least: the function keys.<br>The SEND key broadcasts your message to the current channel. The enter key just creates a line break in your message."
+    },
+    {
+        "selector":null,
+        "text": "Now you are free to play around. Here is a list of channels that have content in them: <ul><li>300: The echo chamber</li></ul>"
     }
 ]
